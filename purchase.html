@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <header class="">
+  <header>
     <nav class="navbar navbar-expand-lg">
       <div class="container">
         <a class="navbar-brand" href="index.html"><h2>ChickFlex<em>Arts</em></h2></a>
@@ -64,7 +64,7 @@
           <div class="section-heading">
             <h2>Order Form</h2>
           </div>
-          <form id="orderForm" enctype="multipart/form-data">
+          <form id="orderForm" enctype="multipart/form-data" onsubmit="submitOrder(event)">
             <div class="row">
               <div class="col-md-6 mb-3">
                 <fieldset>
@@ -116,18 +116,18 @@
                 </fieldset>
               </div>
               <div class="col-md-12 mb-4">
-		    <fieldset>
-		      <label for="photoUpload" style="margin-bottom: 10px;">Upload a Photo for Portrait:</label>
-		      <input name="photo" type="file" class="form-control-file" id="photoUpload" accept="image/*" required>
-		    </fieldset>
+                <fieldset>
+                  <label for="photoUpload" style="margin-bottom: 10px;">Upload a Photo for Portrait:</label>
+                  <input name="photo" type="file" class="form-control-file" id="photoUpload" accept="image/*" required>
+                </fieldset>
               </div>
-	      <input type="hidden" name="photo_url" id="photo_url" value="">
+              <input type="hidden" name="photo_url" id="photo_url" value="">
 
-                <div class="col-md-12">
-		    <fieldset>
-		      <button type="button" id="form-submit" onclick="submitOrder()" class="filled-button" style="background-color: #f33f3f; border-color: #f33f3f; color: white;">Submit Order</button>
-		    </fieldset>
-		  </div>
+              <div class="col-md-12">
+                <fieldset>
+                  <button type="submit" id="form-submit" class="filled-button" style="background-color: #f33f3f; border-color: #f33f3f; color: white;">Submit Order</button>
+                </fieldset>
+              </div>
             </div>
           </form>
         </div>
@@ -166,95 +166,68 @@
   <script src="assets/js/slick.js"></script>
   <script src="assets/js/isotope.js"></script>
   <script src="assets/js/accordions.js"></script>
-  <script language="text/Javascript">
-    cleared[0] = cleared[1] = cleared[2] = 0;
-    function clearField(t) {
-      if (!cleared[t.id]) {
-        cleared[t.id] = 1;
-        t.value = '';
-        t.style.color = '#fff';
-      }
-    }
-  </script>
-  
-	<!--Start of Tawk.to Script-->
-	<script type="text/javascript">
-	var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-	(function(){
-	var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-	s1.async=true;
-	s1.src='https://embed.tawk.to/67f218cc696e65190d40e2b9/1io4r1o6g';
-	s1.charset='UTF-8';
-	s1.setAttribute('crossorigin','*');
-	s0.parentNode.insertBefore(s1,s0);
-	})();
-	</script>
-	<!--End of Tawk.to Script-->
-	
-<script>
-  function submitOrder() {
-    const form = document.getElementById('orderForm');
-    const formData = new FormData(form);
 
-    fetch('https://formspree.io/f/movepazo', {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'Accept': 'application/json'
-      }
-    }).then(response => {
-      if (response.ok) {
-        // Optional: Save data to localStorage for payment page
-        localStorage.setItem('size', formData.get('size'));
-        localStorage.setItem('framing', formData.get('framing'));
-        localStorage.setItem('rush', formData.get('rush'));
-        localStorage.setItem('name', formData.get('name'));
-        localStorage.setItem('email', formData.get('email'));
-        // etc... You can save more values here
+  <script>
+    // Submit Order and handle image upload first
+    function submitOrder(event) {
+      event.preventDefault();
 
-        // Redirect to payment page
-        window.location.href = 'payment.html';
-      } else {
-        alert('Oops! Something went wrong while submitting. Please try again.');
-      }
-    }).catch(error => {
-      console.error('Submission error:', error);
-      alert('Submission failed. Check your internet connection or try again later.');
-    });
-  }
-</script>
-	
-<script>
-  // Add event listener for file input change
-  document.getElementById('photoUpload').addEventListener('change', function(event) {
-    var file = event.target.files[0];
-    if (file) {
-      var formData = new FormData();
-      formData.append('image', file);
+      // Handle image upload to ImgBB first
+      const photoUpload = document.getElementById('photoUpload');
+      const photoFile = photoUpload.files[0];
 
-      // Replace YOUR_IMGBB_API_KEY with your actual Imgbb API Key
+      if (!photoFile) {
+        alert("Please upload a photo for the portrait.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('image', photoFile);
+
+      // Upload image to ImgBB
       fetch('https://api.imgbb.com/1/upload?key=3d57b7d65e8755b81d625a2dfa1ba26f', {
         method: 'POST',
-        body: formData,
+        body: formData
       })
       .then(response => response.json())
       .then(data => {
-        // On successful upload, update the hidden field with the image URL
         if (data && data.data && data.data.url) {
           document.getElementById('photo_url').value = data.data.url;
+
+          // After image upload, submit the rest of the form
+          const orderForm = document.getElementById('orderForm');
+          const formData = new FormData(orderForm);
+
+          fetch('https://formspree.io/f/movepazo', {
+            method: 'POST',
+            body: formData
+          }).then(response => {
+            if (response.ok) {
+              // Save data to localStorage
+              localStorage.setItem('size', formData.get('size'));
+              localStorage.setItem('framing', formData.get('framing'));
+              localStorage.setItem('rush', formData.get('rush'));
+              localStorage.setItem('name', formData.get('name'));
+              localStorage.setItem('email', formData.get('email'));
+
+              // Redirect to payment page
+              window.location.href = 'payment.html';
+            } else {
+              alert('Error while submitting your order. Please try again.');
+            }
+          }).catch(error => {
+            console.error('Submission failed:', error);
+            alert('Submission failed. Please try again later.');
+          });
         } else {
-          alert('Failed to upload the image!');
+          alert('Failed to upload image. Please try again.');
         }
       })
       .catch(error => {
-        console.error('Error uploading image:', error);
-        alert('Failed to upload the image!');
+        console.error('Image upload error:', error);
+        alert('Failed to upload the image. Please try again.');
       });
     }
-  });
-</script>
-
-
+  </script>
 </body>
-
 </html>
