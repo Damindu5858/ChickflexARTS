@@ -249,6 +249,8 @@ header .navbar {
 	float: 	left;
 	margin-top: -12px;
 	outline: none;
+	display: flex;
+        align-items: center;
 }
 .navbar .navbar-brand h2 {
 	color: #fff;
