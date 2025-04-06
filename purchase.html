@@ -8,6 +8,12 @@
   <meta name="author" content="ChickFlex Arts">
   <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <!-- Firebase App (general SDK) -->
+  <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js"></script>
+  <!-- Firebase Firestore SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"></script>
+  <!-- Firebase Storage SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-storage.js"></script>
 
   <title>Purchase Now - ChickFlex Arts</title>
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -335,6 +341,7 @@
                       <option value="YE">Yemen</option>
                       <option value="ZM">Zambia</option>
                       <option value="ZW">Zimbabwe</option>
+
                     </select>
                 </fieldset>
               </div>
@@ -392,58 +399,56 @@
   <script src="assets/js/accordions.js"></script>
 
   <script>
-    // Submit Order and handle image upload first
-    function submitOrder(event) {
+    // Initialize Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyABfuEHhJvt-QfiQ2sgzdIddmhchEXeERw",
+      authDomain: "portraitshop-dfabc.firebaseapp.com",
+      projectId: "portraitshop-dfabc",
+      storageBucket: "portraitshop-dfabc.appspot.com",
+      messagingSenderId: "829928148482",
+      appId: "1:829928148482:web:446497670ec0d0cfbca515",
+      measurementId: "G-W28L0JK0GJ"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    // Handle form submission
+    async function submitOrder(event) {
       event.preventDefault();
 
-      // Handle image upload to ImgBB first
-      const photoUpload = document.getElementById('photoUpload');
-      const photoFile = photoUpload.files[0];
+      const file = document.getElementById('photoUpload').files[0];
+      const fileName = `${Date.now()}-${file.name}`;
+      const storageRef = storage.ref().child(`images/${fileName}`);
 
-      if (!photoFile) {
-        alert("Please upload a photo for the portrait.");
-        return;
+      // Upload the photo to Firebase Storage
+      try {
+        const snapshot = await storageRef.put(file);
+        const downloadURL = await snapshot.ref.getDownloadURL();
+
+        const orderData = {
+          name: document.getElementById('name').value,
+          email: document.getElementById('email').value,
+          phone: document.getElementById('phone').value,
+          message: document.getElementById('message').value,
+          size: document.getElementById('size').value,
+          framing: document.getElementById('framing').value,
+          rush: document.getElementById('rush').value,
+          country: document.getElementById('country').value,
+          photo_url: downloadURL
+        };
+
+        // Store order data in Firestore
+        await db.collection("orders").add(orderData);
+
+        // Confirmation popup
+        alert("Your order has been placed successfully!");
+        document.getElementById('orderForm').reset();
+      } catch (error) {
+        console.error("Error submitting order: ", error);
       }
-
-      const formData = new FormData();
-      formData.append('image', photoFile);
-
-      // Upload image to ImgBB
-      fetch('https://api.imgbb.com/1/upload?key=3d57b7d65e8755b81d625a2dfa1ba26f', {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data && data.data && data.data.url) {
-          document.getElementById('photo_url').value = data.data.url;
-
-          // After image upload, store data in localStorage
-          const orderForm = document.getElementById('orderForm');
-          const orderData = new FormData(orderForm);
-
-          localStorage.setItem('name', orderData.get('name'));
-          localStorage.setItem('email', orderData.get('email'));
-          localStorage.setItem('phone', orderData.get('phone'));
-          localStorage.setItem('message', orderData.get('message'));
-          localStorage.setItem('size', orderData.get('size'));
-          localStorage.setItem('framing', orderData.get('framing'));
-          localStorage.setItem('rush', orderData.get('rush'));
-          localStorage.setItem('photo_url', data.data.url);
-
-          // Redirect to payment page
-          window.location.href = 'payment.html';
-        } else {
-          alert('Failed to upload image. Please try again.');
-          console.error('Image upload failed:', data);
-        }
-      })
-      .catch(error => {
-        console.error('Image upload error:', error);
-        alert('Failed to upload the image. Please try again.');
-      });
     }
   </script>
-</body>
 
+</body>
 </html>
