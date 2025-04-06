@@ -1,24 +1,45 @@
+<!-- Updated payment.html -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Payment page for portrait order">
-  <meta name="author" content="ChickFlex Arts">
-  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="Payment page for portrait order" />
+  <meta name="author" content="ChickFlex Arts" />
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
 
   <title>Complete Your Payment - ChickFlex Arts</title>
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/fontawesome.css">
-  <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
-  <link rel="stylesheet" href="assets/css/owl.css">
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/fontawesome.css" />
+  <link rel="stylesheet" href="assets/css/templatemo-sixteen.css" />
+  <link rel="stylesheet" href="assets/css/owl.css" />
+  <style>
+    .summary-box {
+      background-color: #f9f9f9;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .filled-button {
+      background-color: #ff589e;
+      color: white;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .filled-button:hover {
+      background-color: #ff3370;
+    }
+  </style>
 </head>
 
 <body>
-
-
   <header class="">
     <nav class="navbar navbar-expand-lg">
       <div class="container">
@@ -56,15 +77,25 @@
       <div class="row">
         <div class="col-md-8">
           <div class="section-heading">
+            <h2>Order Summary</h2>
+          </div>
+          <div class="summary-box">
+            <p><strong>Name:</strong> <span id="order-name">-</span></p>
+            <p><strong>Size:</strong> <span id="order-size">-</span></p>
+            <p><strong>Framing:</strong> <span id="order-frame">-</span></p>
+            <p><strong>Rush Delivery:</strong> <span id="order-rush">-</span></p>
+          </div>
+
+          <div class="section-heading">
             <h2>Payment Details</h2>
           </div>
-          <div id="price-summary">
+          <div id="price-summary" class="summary-box">
             <p><strong>Drawing Price:</strong> Rs. <span id="drawing-price">0</span></p>
             <p><strong>Framing:</strong> Rs. <span id="framing-fee">0</span></p>
             <p><strong>Rush Delivery:</strong> Rs. <span id="rush-fee">0</span></p>
             <p><strong>Shipping Fee:</strong> Rs. <span id="shipping-fee">0</span></p>
             <p><strong>Discount:</strong> Rs. <span id="discount">0</span></p>
-            <hr>
+            <hr />
             <h4>Total: Rs. <span id="total-price">0</span></h4>
           </div>
 
@@ -73,11 +104,11 @@
           </div>
           <form id="payment-method-form">
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="paymentMethod" id="cardPayment" value="card" checked>
+              <input class="form-check-input" type="radio" name="paymentMethod" id="cardPayment" value="card" checked />
               <label class="form-check-label" for="cardPayment">Pay with Credit/Debit Card</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer" value="bank">
+              <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer" value="bank" />
               <label class="form-check-label" for="bankTransfer">Pay via Bank Transfer</label>
             </div>
 
@@ -117,22 +148,24 @@
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script>
     const orderData = JSON.parse(localStorage.getItem("orderData")) || {};
+
+    // Validate required fields
+    if (!orderData.size || !orderData.framing || !orderData.rush || !orderData.name) {
+      alert("Order details are incomplete. Please go back and complete the form.");
+      window.location.href = "contact.html";
+    }
+
     const sizePrices = { A4: 4000, A3: 5500, A5: 3000 };
     const framePrices = { No: 0, Wooden: 1000, Classic: 1500 };
     const rushPrices = { No: 0, Yes: 1000 };
-    const shippingByCountry = {
-      LK: 500,
-      IN: 1000,
-      US: 2000,
-      UK: 1800
-    };
+    const shippingByCountry = { LK: 500, IN: 1000, US: 2000, UK: 1800 };
 
     function calculateTotal() {
-      const country = document.getElementById('country').value;
+      const country = document.getElementById("country").value;
       const drawingPrice = sizePrices[orderData.size] || 0;
       const framing = framePrices[orderData.framing] || 0;
       const rush = rushPrices[orderData.rush] || 0;
-      const shipping = shippingByCountry[country] || 2500;
+      const shipping = shippingByCountry[country] !== undefined ? shippingByCountry[country] : 2500;
       const discount = 0;
 
       const total = drawingPrice + framing + rush + shipping - discount;
@@ -145,7 +178,13 @@
       document.getElementById("total-price").textContent = total;
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener("DOMContentLoaded", () => {
+      // Show order details
+      document.getElementById("order-name").textContent = orderData.name || "-";
+      document.getElementById("order-size").textContent = orderData.size || "-";
+      document.getElementById("order-frame").textContent = orderData.framing || "-";
+      document.getElementById("order-rush").textContent = orderData.rush || "-";
+
       calculateTotal();
     });
 
@@ -153,13 +192,18 @@
       calculateTotal();
     }
 
-    document.getElementById('payment-method-form').addEventListener('submit', function (e) {
+    document.getElementById("payment-method-form").addEventListener("submit", function (e) {
       e.preventDefault();
       const method = document.querySelector('input[name="paymentMethod"]:checked').value;
-      if (method === 'card') {
-        window.location.href = 'card-payment.html';
-      } else {
-        window.location.href = 'bank-transfer.html';
+
+      const confirmMsg =
+        method === "card"
+          ? "You're about to pay with Credit/Debit Card. Proceed?"
+          : "You're about to pay via Bank Transfer. Proceed?";
+      const confirmed = confirm(confirmMsg);
+
+      if (confirmed) {
+        window.location.href = method === "card" ? "card-payment.html" : "bank-transfer.html";
       }
     });
   </script>
