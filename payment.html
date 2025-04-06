@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Payment page for portrait order">
+  <meta name="author" content="ChickFlex Arts">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+  <title>Complete Your Payment - ChickFlex Arts</title>
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/fontawesome.css">
+  <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
+  <link rel="stylesheet" href="assets/css/owl.css">
+</head>
+
+<body>
+  <div id="preloader">
+    <div class="jumper">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+
+  <header class="">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="index.html"><h2>ChickFlex<em>Arts</em></h2></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="products.html">Our Products</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="page-heading contact-heading header-text">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="text-content">
+            <h4>Complete Your Purchase</h4>
+            <h2>Choose Payment Method</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="send-message">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="section-heading">
+            <h2>Payment Details</h2>
+          </div>
+          <div id="price-summary">
+            <p><strong>Drawing Price:</strong> Rs. <span id="drawing-price">4000</span></p>
+            <p><strong>Shipping Fee:</strong> Rs. <span id="shipping-fee">0</span></p>
+            <p><strong>Discount:</strong> Rs. <span id="discount">0</span></p>
+            <hr>
+            <h4>Total: Rs. <span id="total-price">4000</span></h4>
+          </div>
+
+          <div class="section-heading mt-4">
+            <h2>Select Payment Method</h2>
+          </div>
+          <form id="payment-method-form">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="paymentMethod" id="cardPayment" value="card" checked>
+              <label class="form-check-label" for="cardPayment">Pay with Credit/Debit Card</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer" value="bank">
+              <label class="form-check-label" for="bankTransfer">Pay via Bank Transfer</label>
+            </div>
+
+            <button type="submit" class="filled-button mt-4">Place Order</button>
+          </form>
+        </div>
+
+        <div class="col-md-4">
+          <div class="section-heading">
+            <h2>Shipping Details</h2>
+          </div>
+          <label for="country">Select Shipping Country:</label>
+          <select class="form-control" id="country" onchange="updateShippingFee()">
+            <option value="LK" selected>Sri Lanka</option>
+            <option value="IN">India</option>
+            <option value="US">United States</option>
+            <option value="UK">United Kingdom</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="inner-content">
+            <p>Copyright &copy; 2023 ChickFlex Arts (pvt), Ltd.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function updateShippingFee() {
+      const country = document.getElementById('country').value;
+      let shipping = 0;
+      if (country === 'LK') shipping = 500;
+      else if (country === 'IN') shipping = 1000;
+      else if (country === 'US') shipping = 2000;
+      else if (country === 'UK') shipping = 1800;
+
+      document.getElementById('shipping-fee').textContent = shipping;
+      const price = parseInt(document.getElementById('drawing-price').textContent);
+      const discount = parseInt(document.getElementById('discount').textContent);
+      const total = price + shipping - discount;
+      document.getElementById('total-price').textContent = total;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateShippingFee();
+    });
+
+    document.getElementById('payment-method-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const method = document.querySelector('input[name="paymentMethod"]:checked').value;
+      if (method === 'card') {
+        window.location.href = 'card-payment.html';
+      } else {
+        window.location.href = 'bank-transfer.html';
+      }
+    });
+  </script>
+</body>
+
+</html>
