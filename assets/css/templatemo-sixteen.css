@@ -212,6 +212,17 @@ header {
 header .navbar {
 	padding: 17px 0px;
 }
+
+/* Ensure the logo image appears circular and is sized appropriately */
+.logo {
+  width: 50px;         /* Adjust this value as needed */
+  height: 50px;        /* Adjust this value as needed */
+  border-radius: 50%;  /* Makes the image circular */
+  object-fit: cover;   /* Ensures the image covers the circle nicely */
+  margin-right: 10px;  /* Space between the logo and the text */
+  vertical-align: middle; /* Aligns it nicely with the text */
+}
+
 .background-header .navbar {
 	padding: 17px 0px;
 }
