@@ -62,29 +62,29 @@
           <div class="section-heading">
             <h2>Order Form</h2>
           </div>
-          <form id="contact" action="https://formspree.io/f/your-form-id" method="POST" enctype="multipart/form-data">
+          <form id="contact" action="https://formspree.io/f/movepazo" method="POST" enctype="multipart/form-data">
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-6 mb-3">
                 <fieldset>
                   <input name="name" type="text" class="form-control" id="name" placeholder="Full Name" required>
                 </fieldset>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 mb-3">
                 <fieldset>
                   <input name="email" type="email" class="form-control" id="email" placeholder="Email Address" required>
                 </fieldset>
               </div>
-              <div class="col-md-12">
+              <div class="col-md-12 mb-3">
                 <fieldset>
                   <input name="phone" type="text" class="form-control" id="phone" placeholder="Phone Number" required>
                 </fieldset>
               </div>
-              <div class="col-md-12">
+              <div class="col-md-12 mb-3">
                 <fieldset>
                   <textarea name="message" rows="6" class="form-control" id="message" placeholder="Describe your desired portrait, delivery option, etc." required></textarea>
                 </fieldset>
               </div>
-              <div class="col-md-12">
+              <div class="col-md-12 mb-3">
                 <fieldset>
                   <label for="size" style="margin-bottom: 10px;">Select Portrait Size (with price & delivery):</label>
                   <select name="size" id="size" class="form-control" required>
@@ -94,7 +94,7 @@
                   </select>
                 </fieldset>
               </div>
-              <div class="col-md-12">
+              <div class="col-md-12 mb-3">
                 <fieldset>
                   <label for="framing" style="margin-top: 20px;">Add Framing Option:</label>
                   <select name="framing" id="framing" class="form-control">
@@ -104,7 +104,7 @@
                   </select>
                 </fieldset>
               </div>
-              <div class="col-md-12">
+              <div class="col-md-12 mb-3">
                 <fieldset>
                   <label for="rush" style="margin-top: 20px;">Rush Delivery:</label>
                   <select name="rush" id="rush" class="form-control">
@@ -113,13 +113,13 @@
                   </select>
                 </fieldset>
               </div>
-              <div class="col-md-12" style="margin-top: 20px;">
+              <div class="col-md-12 mb-4">
                 <fieldset>
                   <label for="photoUpload" style="margin-bottom: 10px;">Upload a Photo for Portrait:</label>
                   <input name="photo" type="file" class="form-control-file" id="photoUpload" accept="image/*" required>
                 </fieldset>
               </div>
-              <div class="col-md-12" style="margin-top: 30px;">
+              <div class="col-md-12">
                 <fieldset>
                   <button type="submit" id="form-submit" class="filled-button" style="background-color: #f33f3f; border-color: #f33f3f; color: white;">Submit Order</button>
                 </fieldset>
