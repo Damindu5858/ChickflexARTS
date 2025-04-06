@@ -65,11 +65,13 @@
             <h2>Payment Details</h2>
           </div>
           <div id="price-summary">
-            <p><strong>Drawing Price:</strong> Rs. <span id="drawing-price">4000</span></p>
+            <p><strong>Drawing Price:</strong> Rs. <span id="drawing-price">0</span></p>
+            <p><strong>Framing:</strong> Rs. <span id="framing-fee">0</span></p>
+            <p><strong>Rush Delivery:</strong> Rs. <span id="rush-fee">0</span></p>
             <p><strong>Shipping Fee:</strong> Rs. <span id="shipping-fee">0</span></p>
             <p><strong>Discount:</strong> Rs. <span id="discount">0</span></p>
             <hr>
-            <h4>Total: Rs. <span id="total-price">4000</span></h4>
+            <h4>Total: Rs. <span id="total-price">0</span></h4>
           </div>
 
           <div class="section-heading mt-4">
@@ -120,24 +122,42 @@
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script>
-    function updateShippingFee() {
-      const country = document.getElementById('country').value;
-      let shipping = 0;
-      if (country === 'LK') shipping = 500;
-      else if (country === 'IN') shipping = 1000;
-      else if (country === 'US') shipping = 2000;
-      else if (country === 'UK') shipping = 1800;
+    const orderData = JSON.parse(localStorage.getItem("orderData")) || {};
+    const sizePrices = { A4: 4000, A3: 5500, A5: 3000 };
+    const framePrices = { No: 0, Wooden: 1000, Classic: 1500 };
+    const rushPrices = { No: 0, Yes: 1000 };
+    const shippingByCountry = {
+      LK: 500,
+      IN: 1000,
+      US: 2000,
+      UK: 1800
+    };
 
-      document.getElementById('shipping-fee').textContent = shipping;
-      const price = parseInt(document.getElementById('drawing-price').textContent);
-      const discount = parseInt(document.getElementById('discount').textContent);
-      const total = price + shipping - discount;
-      document.getElementById('total-price').textContent = total;
+    function calculateTotal() {
+      const country = document.getElementById('country').value;
+      const drawingPrice = sizePrices[orderData.size] || 0;
+      const framing = framePrices[orderData.framing] || 0;
+      const rush = rushPrices[orderData.rush] || 0;
+      const shipping = shippingByCountry[country] || 2500;
+      const discount = 0;
+
+      const total = drawingPrice + framing + rush + shipping - discount;
+
+      document.getElementById("drawing-price").textContent = drawingPrice;
+      document.getElementById("framing-fee").textContent = framing;
+      document.getElementById("rush-fee").textContent = rush;
+      document.getElementById("shipping-fee").textContent = shipping;
+      document.getElementById("discount").textContent = discount;
+      document.getElementById("total-price").textContent = total;
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      updateShippingFee();
+      calculateTotal();
     });
+
+    function updateShippingFee() {
+      calculateTotal();
+    }
 
     document.getElementById('payment-method-form').addEventListener('submit', function (e) {
       e.preventDefault();
@@ -149,14 +169,6 @@
       }
     });
   </script>
-<script>
-  function redirectToPayment() {
-    // Optional: Validate form data here before redirecting
-
-    // Redirect to payment page
-    window.location.href = "payment.html";
-  }
-</script>
 </body>
 
 </html>
