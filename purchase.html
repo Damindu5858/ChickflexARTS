@@ -1,93 +1,143 @@
-<!-- purchase.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Order Portrait - ChickFlex Arts</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Order your custom portraits">
+  <meta name="author" content="ChickFlex Arts">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+  <title>Purchase Now - ChickFlex Arts</title>
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/fontawesome.css">
+  <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
+  <link rel="stylesheet" href="assets/css/owl.css">
 </head>
+
 <body>
-  <header>
-    <h1>ChickFlex Arts</h1>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="purchase.html" class="active">Order Now</a></li>
-      </ul>
+  <div id="preloader">
+    <div class="jumper">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+
+  <header class="">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="index.html"><h2>ChickFlex<em>Arts</em></h2></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="products.html">Our Products</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
     </nav>
   </header>
 
-  <section class="order-section">
-    <h2>Order Your Portrait</h2>
-    <p>Fill out the form below to place your order. We’ll contact you shortly with confirmation and payment instructions.</p>
+  <div class="page-heading contact-heading header-text">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="text-content">
+            <h4>Place Your Order</h4>
+            <h2>Portrait Purchase</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <form action="https://formspree.io/f/movepazo" method="POST">
-      <label for="name">Full Name:</label>
-      <input type="text" id="name" name="name" required>
-
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required>
-
-      <label for="phone">Phone Number:</label>
-      <input type="tel" id="phone" name="phone">
-
-      <label for="size">Portrait Size:</label>
-      <select name="size" id="size">
-        <option value="A4">A4</option>
-        <option value="A3">A3</option>
-        <option value="A2">A5</option>
-      </select>
-
-      <label for="reference">Reference Photo (link):</label>
-      <input type="url" id="reference" name="reference" placeholder="e.g., Google Drive/Instagram link">
-
-      <label for="note">Additional Notes:</label>
-      <textarea id="note" name="note" rows="4"></textarea>
-
-      <button type="submit">Submit Order</button>
-    </form>
-  </section>
-
-  <section class="payment-guide">
-    <h2>Payment Methods</h2>
-    <p>We currently accept the following payment options:</p>
-    <ul>
-      <li><strong>Bank Transfer:</strong> We will send you bank details after receiving your order.</li>
-      <li><strong>EasyCash / mCash:</strong> Details will be emailed to you upon confirmation.</li>
-      <li><strong>PayPal:</strong> For international customers (on request).</li>
-    </ul>
-    <p>Please wait for our email confirmation before sending any payments.</p>
-  </section>
+  <div class="send-message">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="section-heading">
+            <h2>Order Form</h2>
+          </div>
+          <form id="contact" action="https://formspree.io/f/movepazo" method="POST">
+            <div class="row">
+              <div class="col-md-6">
+                <fieldset>
+                  <input name="name" type="text" class="form-control" id="name" placeholder="Full Name" required>
+                </fieldset>
+              </div>
+              <div class="col-md-6">
+                <fieldset>
+                  <input name="email" type="email" class="form-control" id="email" placeholder="Email Address" required>
+                </fieldset>
+              </div>
+              <div class="col-md-12">
+                <fieldset>
+                  <input name="phone" type="text" class="form-control" id="phone" placeholder="Phone Number" required>
+                </fieldset>
+              </div>
+              <div class="col-md-12">
+                <fieldset>
+                  <textarea name="message" rows="6" class="form-control" id="message" placeholder="Describe your desired portrait, preferred size, delivery option..." required></textarea>
+                </fieldset>
+              </div>
+              <div class="col-md-12">
+                <fieldset>
+                  <button type="submit" id="form-submit" class="filled-button">Submit Order</button>
+                </fieldset>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-4">
+          <div class="section-heading">
+            <h2>Payment Guide</h2>
+          </div>
+          <p>We accept online payments via bank transfer, eZ Cash, or direct mobile payment. After submitting your order, we will contact you with the exact price and payment instructions.</p>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Step 1: Fill out and submit the order form</li>
+            <li class="list-group-item">Step 2: Receive order confirmation and payment details</li>
+            <li class="list-group-item">Step 3: Make your payment and send proof</li>
+            <li class="list-group-item">Step 4: Portrait creation begins</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <footer>
-    <p>Copyright &copy; 2023 ChickFlex Arts (pvt), Ltd.</p>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="inner-content">
+            <p>Copyright &copy; 2023 ChickFlex Arts (pvt), Ltd.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </footer>
 
-  
-      <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/custom.js"></script>
+  <script src="assets/js/owl.js"></script>
+  <script src="assets/js/slick.js"></script>
+  <script src="assets/js/isotope.js"></script>
+  <script src="assets/js/accordions.js"></script>
 
-
-    <!-- Additional Scripts -->
-    <script src="assets/js/custom.js"></script>
-    <script src="assets/js/owl.js"></script>
-    <script src="assets/js/slick.js"></script>
-    <script src="assets/js/isotope.js"></script>
-    <script src="assets/js/accordions.js"></script>
-
-
-    <script language = "text/Javascript"> 
-      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-      function clearField(t){                   //declaring the array outside of the
-      if(! cleared[t.id]){                      // function makes it static and global
-          cleared[t.id] = 1;  // you could use true and false, but that's more typing
-          t.value='';         // with more chance of typos
-          t.style.color='#fff';
-          }
+  <script language="text/Javascript">
+    cleared[0] = cleared[1] = cleared[2] = 0;
+    function clearField(t) {
+      if (!cleared[t.id]) {
+        cleared[t.id] = 1;
+        t.value = '';
+        t.style.color = '#fff';
       }
-    </script>
+    }
+  </script>
 </body>
+
 </html>
