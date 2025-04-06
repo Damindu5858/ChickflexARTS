@@ -1,0 +1,68 @@
+<!-- purchase.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Portrait - ChickFlex Arts</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <h1>ChickFlex Arts</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="purchase.html" class="active">Order Now</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="order-section">
+    <h2>Order Your Portrait</h2>
+    <p>Fill out the form below to place your order. We’ll contact you shortly with confirmation and payment instructions.</p>
+
+    <form action="https://formspree.io/f/your-form-id" method="POST">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" name="phone">
+
+      <label for="size">Portrait Size:</label>
+      <select name="size" id="size">
+        <option value="A4">A4</option>
+        <option value="A3">A3</option>
+        <option value="A2">A5</option>
+      </select>
+
+      <label for="reference">Reference Photo (link):</label>
+      <input type="url" id="reference" name="reference" placeholder="e.g., Google Drive/Instagram link">
+
+      <label for="note">Additional Notes:</label>
+      <textarea id="note" name="note" rows="4"></textarea>
+
+      <button type="submit">Submit Order</button>
+    </form>
+  </section>
+
+  <section class="payment-guide">
+    <h2>Payment Methods</h2>
+    <p>We currently accept the following payment options:</p>
+    <ul>
+      <li><strong>Bank Transfer:</strong> We will send you bank details after receiving your order.</li>
+      <li><strong>EasyCash / mCash:</strong> Details will be emailed to you upon confirmation.</li>
+      <li><strong>PayPal:</strong> For international customers (on request).</li>
+    </ul>
+    <p>Please wait for our email confirmation before sending any payments.</p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 ChickFlex Arts. All rights reserved.</p>
+  </footer>
+</body>
+</html>
