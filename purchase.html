@@ -62,7 +62,7 @@
           <div class="section-heading">
             <h2>Order Form</h2>
           </div>
-          <form id="contact" action="https://formspree.io/f/movepazo" method="POST" enctype="multipart/form-data">
+          <form id="contact" action="https://formspree.io/f/your-form-id" method="POST" enctype="multipart/form-data">
             <div class="row">
               <div class="col-md-6">
                 <fieldset>
@@ -81,18 +81,47 @@
               </div>
               <div class="col-md-12">
                 <fieldset>
-                  <textarea name="message" rows="6" class="form-control" id="message" placeholder="Describe your desired portrait, preferred size, delivery option..." required></textarea>
+                  <textarea name="message" rows="6" class="form-control" id="message" placeholder="Describe your desired portrait, delivery option, etc." required></textarea>
                 </fieldset>
               </div>
               <div class="col-md-12">
+                <fieldset>
+                  <label for="size" style="margin-bottom: 10px;">Select Portrait Size (with price & delivery):</label>
+                  <select name="size" id="size" class="form-control" required>
+                    <option value="A4">A4 - Rs. 4,000 (5-7 days)</option>
+                    <option value="A3">A3 - Rs. 5,500 (7-10 days)</option>
+                    <option value="A5">A5 - Rs. 3,000 (3-5 days)</option>
+                  </select>
+                </fieldset>
+              </div>
+              <div class="col-md-12">
+                <fieldset>
+                  <label for="framing" style="margin-top: 20px;">Add Framing Option:</label>
+                  <select name="framing" id="framing" class="form-control">
+                    <option value="No">No Frame</option>
+                    <option value="Wooden">Wooden Frame - Rs. 1,000</option>
+                    <option value="Classic">Classic Frame - Rs. 1,500</option>
+                  </select>
+                </fieldset>
+              </div>
+              <div class="col-md-12">
+                <fieldset>
+                  <label for="rush" style="margin-top: 20px;">Rush Delivery:</label>
+                  <select name="rush" id="rush" class="form-control">
+                    <option value="No">No Rush</option>
+                    <option value="Yes">Yes - Extra Rs. 1,000 (Delivery 2 days earlier)</option>
+                  </select>
+                </fieldset>
+              </div>
+              <div class="col-md-12" style="margin-top: 20px;">
                 <fieldset>
                   <label for="photoUpload" style="margin-bottom: 10px;">Upload a Photo for Portrait:</label>
                   <input name="photo" type="file" class="form-control-file" id="photoUpload" accept="image/*" required>
                 </fieldset>
               </div>
-              <div class="col-md-12">
+              <div class="col-md-12" style="margin-top: 30px;">
                 <fieldset>
-                  <button type="submit" id="form-submit" class="filled-button" style="background-color: #f33f3f; border-color: #f33f3f;">Submit Order</button>
+                  <button type="submit" id="form-submit" class="filled-button" style="background-color: #f33f3f; border-color: #f33f3f; color: white;">Submit Order</button>
                 </fieldset>
               </div>
             </div>
@@ -143,6 +172,7 @@
       }
     }
   </script>
+
 </body>
 
 </html>
