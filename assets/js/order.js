@@ -12,7 +12,7 @@ import {
   getDownloadURL
 } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-storage.js";
 
-// Firebase config
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyABfuEHhJvt-QfiQ2sgzdIddm7Gc95fvzk",
   authDomain: "chickflex-arts.firebaseapp.com",
@@ -35,17 +35,17 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const photoInput = document.getElementById("photoUpload");
-    const photoFile = photoInput.files[0];
-
-    // Validate required fields
+    // Validate required fields by checking their trimmed values
     const requiredFields = ['name', 'email', 'phone', 'size', 'framing', 'rush', 'country'];
     for (let field of requiredFields) {
-      if (!form[field].value.trim()) {
+      if (!form[field] || !form[field].value.trim()) {
         alert(`Please fill in the ${field} field.`);
         return;
       }
     }
+
+    const photoInput = document.getElementById("photoUpload");
+    const photoFile = photoInput.files[0];
 
     if (!photoFile) {
       alert("Please upload a photo.");
@@ -53,14 +53,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      // Upload photo to Firebase Storage
+      // Sanitize file name and create a storage reference
       const timestamp = Date.now();
       const sanitizedFileName = photoFile.name.replace(/\s+/g, "_");
       const storageRef = ref(storage, `uploads/${timestamp}_${sanitizedFileName}`);
+
+      // Upload photo to Firebase Storage
       await uploadBytes(storageRef, photoFile);
       const photoURL = await getDownloadURL(storageRef);
 
-      // Prepare form data
+      // Prepare form data to be stored
       const orderData = {
         name: form.name.value.trim(),
         email: form.email.value.trim(),
@@ -74,15 +76,15 @@ document.addEventListener("DOMContentLoaded", () => {
         submitted_at: new Date().toISOString()
       };
 
-      // Save to Firestore
+      // Save the order data to Firestore in the "orders" collection
       await addDoc(collection(db, "orders"), orderData);
 
-      // Save to localStorage
+      // Store all order data in localStorage for later use (e.g., payment page)
       Object.keys(orderData).forEach(key => {
         localStorage.setItem(key, orderData[key]);
       });
 
-      // Redirect to payment page
+      // Redirect to payment page upon successful submission
       window.location.href = "payment.html";
     } catch (error) {
       console.error("Submission error:", error);
