@@ -62,7 +62,7 @@
           <div class="section-heading">
             <h2>Order Form</h2>
           </div>
-          <form id="contact" action="https://formspree.io/f/movepazo" method="POST">
+          <form id="contact" action="https://formspree.io/f/movepazo" method="POST" enctype="multipart/form-data">
             <div class="row">
               <div class="col-md-6">
                 <fieldset>
@@ -86,7 +86,13 @@
               </div>
               <div class="col-md-12">
                 <fieldset>
-                  <button type="submit" id="form-submit" class="filled-button">Submit Order</button>
+                  <label for="photoUpload" style="margin-bottom: 10px;">Upload a Photo for Portrait:</label>
+                  <input name="photo" type="file" class="form-control-file" id="photoUpload" accept="image/*" required>
+                </fieldset>
+              </div>
+              <div class="col-md-12">
+                <fieldset>
+                  <button type="submit" id="form-submit" class="filled-button" style="background-color: #f33f3f; border-color: #f33f3f;">Submit Order</button>
                 </fieldset>
               </div>
             </div>
@@ -127,7 +133,6 @@
   <script src="assets/js/slick.js"></script>
   <script src="assets/js/isotope.js"></script>
   <script src="assets/js/accordions.js"></script>
-
   <script language="text/Javascript">
     cleared[0] = cleared[1] = cleared[2] = 0;
     function clearField(t) {
