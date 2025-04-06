@@ -116,11 +116,13 @@
                 </fieldset>
               </div>
               <div class="col-md-12 mb-4">
-                <fieldset>
-                  <label for="photoUpload" style="margin-bottom: 10px;">Upload a Photo for Portrait:</label>
-                  <input name="photo" type="file" class="form-control-file" id="photoUpload" accept="image/*" required>
-                </fieldset>
+		    <fieldset>
+		      <label for="photoUpload" style="margin-bottom: 10px;">Upload a Photo for Portrait:</label>
+		      <input name="photo" type="file" class="form-control-file" id="photoUpload" accept="image/*" required>
+		    </fieldset>
               </div>
+	      <input type="hidden" name="photo_url" id="photo_url" value="">
+
                 <div class="col-md-12">
 		    <fieldset>
 		      <button type="button" id="form-submit" onclick="submitOrder()" class="filled-button" style="background-color: #f33f3f; border-color: #f33f3f; color: white;">Submit Order</button>
@@ -221,7 +223,36 @@
     });
   }
 </script>
+	
+<script>
+  // Add event listener for file input change
+  document.getElementById('photoUpload').addEventListener('change', function(event) {
+    var file = event.target.files[0];
+    if (file) {
+      var formData = new FormData();
+      formData.append('image', file);
 
+      // Replace YOUR_IMGBB_API_KEY with your actual Imgbb API Key
+      fetch('https://api.imgbb.com/1/upload?key=3d57b7d65e8755b81d625a2dfa1ba26f', {
+        method: 'POST',
+        body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+        // On successful upload, update the hidden field with the image URL
+        if (data && data.data && data.data.url) {
+          document.getElementById('photo_url').value = data.data.url;
+        } else {
+          alert('Failed to upload the image!');
+        }
+      })
+      .catch(error => {
+        console.error('Error uploading image:', error);
+        alert('Failed to upload the image!');
+      });
+    }
+  });
+</script>
 
 
 </body>
