@@ -1,10 +1,4 @@
-/*
 
-TemplateMo 546 Sixteen Clothing
-
-https://templatemo.com/tm-546-sixteen-clothing
-
-*/
 body {
   font-family: 'Poppins', sans-serif;
   overflow-x: hidden;
@@ -807,6 +801,58 @@ footer .inner-content p a {
 	opacity: 0.8;
 }
 
+/* Social Media Icon Styles */
+.social-icons {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.social-icons li {
+    margin: 10px;
+}
+
+.social-icon {
+    text-decoration: none;
+    font-size: 30px;
+    color: #fff;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #3b5998; /* Default color for Facebook */
+    transition: all 0.3s ease;
+}
+
+.social-icon.facebook {
+    background-color: #3b5998;
+}
+
+.social-icon.instagram {
+    background-color: #e4405f;
+}
+
+.social-icon.twitter {
+    background-color: #1da1f2;
+}
+
+.social-icon.linkedin {
+    background-color: #0077b5;
+}
+
+/* Hover Effects */
+.social-icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Font Awesome Icons Styling */
+.social-icon i {
+    color: white;
+    font-size: 20px;
+    display: block;
+    text-align: center;
+}
 
 
 
