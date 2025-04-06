@@ -64,7 +64,7 @@
           <div class="section-heading">
             <h2>Order Form</h2>
           </div>
-          <form id="contact" action="https://formspree.io/f/movepazo" method="POST" enctype="multipart/form-data">
+          <form id="orderForm" enctype="multipart/form-data">
             <div class="row">
               <div class="col-md-6 mb-3">
                 <fieldset>
@@ -121,11 +121,11 @@
                   <input name="photo" type="file" class="form-control-file" id="photoUpload" accept="image/*" required>
                 </fieldset>
               </div>
-              <div class="col-md-12">
-                <fieldset>
-		 <button type="button" onclick="redirectToPayment()" id="form-submit" class="filled-button" style="background-color: #f33f3f; border-color: #f33f3f; color: white;">Submit Order</button>
-                </fieldset>
-              </div>
+                <div class="col-md-12">
+		    <fieldset>
+		      <button type="button" id="form-submit" onclick="submitOrder()" class="filled-button" style="background-color: #f33f3f; border-color: #f33f3f; color: white;">Submit Order</button>
+		    </fieldset>
+		  </div>
             </div>
           </form>
         </div>
@@ -188,6 +188,39 @@
 	})();
 	</script>
 	<!--End of Tawk.to Script-->
+	
+<script>
+  function submitOrder() {
+    const form = document.getElementById('orderForm');
+    const formData = new FormData(form);
+
+    fetch('https://formspree.io/f/movepazo', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    }).then(response => {
+      if (response.ok) {
+        // Optional: Save data to localStorage for payment page
+        localStorage.setItem('size', formData.get('size'));
+        localStorage.setItem('framing', formData.get('framing'));
+        localStorage.setItem('rush', formData.get('rush'));
+        localStorage.setItem('name', formData.get('name'));
+        localStorage.setItem('email', formData.get('email'));
+        // etc... You can save more values here
+
+        // Redirect to payment page
+        window.location.href = 'payment.html';
+      } else {
+        alert('Oops! Something went wrong while submitting. Please try again.');
+      }
+    }).catch(error => {
+      console.error('Submission error:', error);
+      alert('Submission failed. Check your internet connection or try again later.');
+    });
+  }
+</script>
 
 
 
