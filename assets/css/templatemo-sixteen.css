@@ -878,6 +878,13 @@ footer .inner-content p a {
 	margin-left: 30px;
 }
 
+.yellow-star {
+  color: gold;
+}
+
+.yellow-star:hover {
+  color: orange;
+}
 
 
 /* Send Message */
