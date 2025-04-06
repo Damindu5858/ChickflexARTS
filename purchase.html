@@ -70,7 +70,7 @@
           <div class="section-heading">
             <h2>Order Form</h2>
           </div>
-          <form id="orderForm" enctype="multipart/form-data" onsubmit="submitOrder(event)">
+          <form id="orderForm" enctype="multipart/form-data">
             <div class="row">
               <div class="col-md-6 mb-3">
                 <fieldset>
@@ -397,58 +397,6 @@
   <script src="assets/js/slick.js"></script>
   <script src="assets/js/isotope.js"></script>
   <script src="assets/js/accordions.js"></script>
-
-  <script>
-    // Initialize Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyABfuEHhJvt-QfiQ2sgzdIddmhchEXeERw",
-      authDomain: "portraitshop-dfabc.firebaseapp.com",
-      projectId: "portraitshop-dfabc",
-      storageBucket: "portraitshop-dfabc.appspot.com",
-      messagingSenderId: "829928148482",
-      appId: "1:829928148482:web:446497670ec0d0cfbca515",
-      measurementId: "G-W28L0JK0GJ"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-    const storage = firebase.storage();
-
-    // Handle form submission
-    async function submitOrder(event) {
-      event.preventDefault();
-
-      const file = document.getElementById('photoUpload').files[0];
-      const fileName = `${Date.now()}-${file.name}`;
-      const storageRef = storage.ref().child(`images/${fileName}`);
-
-      // Upload the photo to Firebase Storage
-      try {
-        const snapshot = await storageRef.put(file);
-        const downloadURL = await snapshot.ref.getDownloadURL();
-
-        const orderData = {
-          name: document.getElementById('name').value,
-          email: document.getElementById('email').value,
-          phone: document.getElementById('phone').value,
-          message: document.getElementById('message').value,
-          size: document.getElementById('size').value,
-          framing: document.getElementById('framing').value,
-          rush: document.getElementById('rush').value,
-          country: document.getElementById('country').value,
-          photo_url: downloadURL
-        };
-
-        // Store order data in Firestore
-        await db.collection("orders").add(orderData);
-
-        // Confirmation popup
-        alert("Your order has been placed successfully!");
-        document.getElementById('orderForm').reset();
-      } catch (error) {
-        console.error("Error submitting order: ", error);
-      }
-    }
-  </script>
   <script type="module" src="assets/js/order.js"></script>
 </body>
 </html>
